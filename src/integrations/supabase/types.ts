@@ -49,6 +49,88 @@ export type Database = {
           },
         ]
       }
+      capaian_kompetensi: {
+        Row: {
+          ai_generated: boolean | null
+          created_at: string | null
+          deskripsi: string | null
+          id: string
+          id_mapel: string
+          id_santri: string
+          id_tahun_ajaran: string | null
+          nilai_akhir: number | null
+          predikat: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          ai_generated?: boolean | null
+          created_at?: string | null
+          deskripsi?: string | null
+          id?: string
+          id_mapel: string
+          id_santri: string
+          id_tahun_ajaran?: string | null
+          nilai_akhir?: number | null
+          predikat?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          ai_generated?: boolean | null
+          created_at?: string | null
+          deskripsi?: string | null
+          id?: string
+          id_mapel?: string
+          id_santri?: string
+          id_tahun_ajaran?: string | null
+          nilai_akhir?: number | null
+          predikat?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "capaian_kompetensi_id_mapel_fkey"
+            columns: ["id_mapel"]
+            isOneToOne: false
+            referencedRelation: "mata_pelajaran"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "capaian_kompetensi_id_santri_fkey"
+            columns: ["id_santri"]
+            isOneToOne: false
+            referencedRelation: "santri"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "capaian_kompetensi_id_tahun_ajaran_fkey"
+            columns: ["id_tahun_ajaran"]
+            isOneToOne: false
+            referencedRelation: "tahun_ajaran"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ekstrakurikuler: {
+        Row: {
+          aktif: boolean | null
+          created_at: string | null
+          id: string
+          nama: string
+        }
+        Insert: {
+          aktif?: boolean | null
+          created_at?: string | null
+          id?: string
+          nama: string
+        }
+        Update: {
+          aktif?: boolean | null
+          created_at?: string | null
+          id?: string
+          nama?: string
+        }
+        Relationships: []
+      }
       halaqoh: {
         Row: {
           created_at: string | null
@@ -79,12 +161,64 @@ export type Database = {
         }
         Relationships: []
       }
+      kehadiran_akademik: {
+        Row: {
+          alpha: number | null
+          bulan: number
+          created_at: string | null
+          id: string
+          id_santri: string
+          id_tahun_ajaran: string | null
+          izin: number | null
+          sakit: number | null
+          tahun: number
+        }
+        Insert: {
+          alpha?: number | null
+          bulan: number
+          created_at?: string | null
+          id?: string
+          id_santri: string
+          id_tahun_ajaran?: string | null
+          izin?: number | null
+          sakit?: number | null
+          tahun: number
+        }
+        Update: {
+          alpha?: number | null
+          bulan?: number
+          created_at?: string | null
+          id?: string
+          id_santri?: string
+          id_tahun_ajaran?: string | null
+          izin?: number | null
+          sakit?: number | null
+          tahun?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "kehadiran_akademik_id_santri_fkey"
+            columns: ["id_santri"]
+            isOneToOne: false
+            referencedRelation: "santri"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "kehadiran_akademik_id_tahun_ajaran_fkey"
+            columns: ["id_tahun_ajaran"]
+            isOneToOne: false
+            referencedRelation: "tahun_ajaran"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       kelas: {
         Row: {
           created_at: string
           deskripsi: string | null
           id: string
           id_wali_kelas: string | null
+          jenjang: Database["public"]["Enums"]["jenjang_sekolah"] | null
           nama_kelas: string
           updated_at: string
         }
@@ -93,6 +227,7 @@ export type Database = {
           deskripsi?: string | null
           id?: string
           id_wali_kelas?: string | null
+          jenjang?: Database["public"]["Enums"]["jenjang_sekolah"] | null
           nama_kelas: string
           updated_at?: string
         }
@@ -101,6 +236,7 @@ export type Database = {
           deskripsi?: string | null
           id?: string
           id_wali_kelas?: string | null
+          jenjang?: Database["public"]["Enums"]["jenjang_sekolah"] | null
           nama_kelas?: string
           updated_at?: string
         }
@@ -110,6 +246,102 @@ export type Database = {
             columns: ["id_wali_kelas"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      keterampilan_ibadah: {
+        Row: {
+          created_at: string | null
+          id: string
+          id_santri: string
+          id_tahun_ajaran: string | null
+          jenis: string
+          kkm: number | null
+          nilai: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          id_santri: string
+          id_tahun_ajaran?: string | null
+          jenis: string
+          kkm?: number | null
+          nilai?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          id_santri?: string
+          id_tahun_ajaran?: string | null
+          jenis?: string
+          kkm?: number | null
+          nilai?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "keterampilan_ibadah_id_santri_fkey"
+            columns: ["id_santri"]
+            isOneToOne: false
+            referencedRelation: "santri"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "keterampilan_ibadah_id_tahun_ajaran_fkey"
+            columns: ["id_tahun_ajaran"]
+            isOneToOne: false
+            referencedRelation: "tahun_ajaran"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      komponen_nilai: {
+        Row: {
+          bobot: number | null
+          created_at: string | null
+          id: string
+          id_mapel: string
+          id_tahun_ajaran: string | null
+          jenis: Database["public"]["Enums"]["jenis_penilaian"]
+          kelas: string | null
+          nama_komponen: string
+          urutan: number | null
+        }
+        Insert: {
+          bobot?: number | null
+          created_at?: string | null
+          id?: string
+          id_mapel: string
+          id_tahun_ajaran?: string | null
+          jenis?: Database["public"]["Enums"]["jenis_penilaian"]
+          kelas?: string | null
+          nama_komponen: string
+          urutan?: number | null
+        }
+        Update: {
+          bobot?: number | null
+          created_at?: string | null
+          id?: string
+          id_mapel?: string
+          id_tahun_ajaran?: string | null
+          jenis?: Database["public"]["Enums"]["jenis_penilaian"]
+          kelas?: string | null
+          nama_komponen?: string
+          urutan?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "komponen_nilai_id_mapel_fkey"
+            columns: ["id_mapel"]
+            isOneToOne: false
+            referencedRelation: "mata_pelajaran"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "komponen_nilai_id_tahun_ajaran_fkey"
+            columns: ["id_tahun_ajaran"]
+            isOneToOne: false
+            referencedRelation: "tahun_ajaran"
             referencedColumns: ["id"]
           },
         ]
@@ -134,6 +366,248 @@ export type Database = {
           waktu?: string | null
         }
         Relationships: []
+      }
+      mata_pelajaran: {
+        Row: {
+          aktif: boolean | null
+          created_at: string | null
+          id: string
+          jenjang: Database["public"]["Enums"]["jenjang_sekolah"]
+          kategori: Database["public"]["Enums"]["kategori_mapel"]
+          kkm: number | null
+          kode: string | null
+          nama: string
+          updated_at: string | null
+          urutan: number | null
+        }
+        Insert: {
+          aktif?: boolean | null
+          created_at?: string | null
+          id?: string
+          jenjang?: Database["public"]["Enums"]["jenjang_sekolah"]
+          kategori?: Database["public"]["Enums"]["kategori_mapel"]
+          kkm?: number | null
+          kode?: string | null
+          nama: string
+          updated_at?: string | null
+          urutan?: number | null
+        }
+        Update: {
+          aktif?: boolean | null
+          created_at?: string | null
+          id?: string
+          jenjang?: Database["public"]["Enums"]["jenjang_sekolah"]
+          kategori?: Database["public"]["Enums"]["kategori_mapel"]
+          kkm?: number | null
+          kode?: string | null
+          nama?: string
+          updated_at?: string | null
+          urutan?: number | null
+        }
+        Relationships: []
+      }
+      materi_pelajaran: {
+        Row: {
+          created_at: string | null
+          deskripsi_materi: string | null
+          id: string
+          id_mapel: string
+          id_tahun_ajaran: string | null
+          kelas: string
+        }
+        Insert: {
+          created_at?: string | null
+          deskripsi_materi?: string | null
+          id?: string
+          id_mapel: string
+          id_tahun_ajaran?: string | null
+          kelas: string
+        }
+        Update: {
+          created_at?: string | null
+          deskripsi_materi?: string | null
+          id?: string
+          id_mapel?: string
+          id_tahun_ajaran?: string | null
+          kelas?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "materi_pelajaran_id_mapel_fkey"
+            columns: ["id_mapel"]
+            isOneToOne: false
+            referencedRelation: "mata_pelajaran"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "materi_pelajaran_id_tahun_ajaran_fkey"
+            columns: ["id_tahun_ajaran"]
+            isOneToOne: false
+            referencedRelation: "tahun_ajaran"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      nilai_akademik: {
+        Row: {
+          catatan: string | null
+          created_at: string | null
+          id: string
+          id_guru: string | null
+          id_komponen: string
+          id_santri: string
+          id_tahun_ajaran: string | null
+          nilai: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          catatan?: string | null
+          created_at?: string | null
+          id?: string
+          id_guru?: string | null
+          id_komponen: string
+          id_santri: string
+          id_tahun_ajaran?: string | null
+          nilai?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          catatan?: string | null
+          created_at?: string | null
+          id?: string
+          id_guru?: string | null
+          id_komponen?: string
+          id_santri?: string
+          id_tahun_ajaran?: string | null
+          nilai?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nilai_akademik_id_komponen_fkey"
+            columns: ["id_komponen"]
+            isOneToOne: false
+            referencedRelation: "komponen_nilai"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nilai_akademik_id_santri_fkey"
+            columns: ["id_santri"]
+            isOneToOne: false
+            referencedRelation: "santri"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nilai_akademik_id_tahun_ajaran_fkey"
+            columns: ["id_tahun_ajaran"]
+            isOneToOne: false
+            referencedRelation: "tahun_ajaran"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      nilai_ekskul: {
+        Row: {
+          created_at: string | null
+          hasil_akhir: number | null
+          id: string
+          id_ekskul: string
+          id_santri: string
+          id_tahun_ajaran: string | null
+          konversi_nilai: number | null
+          nilai_praktik: number | null
+          rekap_kehadiran: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          hasil_akhir?: number | null
+          id?: string
+          id_ekskul: string
+          id_santri: string
+          id_tahun_ajaran?: string | null
+          konversi_nilai?: number | null
+          nilai_praktik?: number | null
+          rekap_kehadiran?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          hasil_akhir?: number | null
+          id?: string
+          id_ekskul?: string
+          id_santri?: string
+          id_tahun_ajaran?: string | null
+          konversi_nilai?: number | null
+          nilai_praktik?: number | null
+          rekap_kehadiran?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nilai_ekskul_id_ekskul_fkey"
+            columns: ["id_ekskul"]
+            isOneToOne: false
+            referencedRelation: "ekstrakurikuler"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nilai_ekskul_id_santri_fkey"
+            columns: ["id_santri"]
+            isOneToOne: false
+            referencedRelation: "santri"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nilai_ekskul_id_tahun_ajaran_fkey"
+            columns: ["id_tahun_ajaran"]
+            isOneToOne: false
+            referencedRelation: "tahun_ajaran"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pembiasaan: {
+        Row: {
+          created_at: string | null
+          id: string
+          id_santri: string
+          id_tahun_ajaran: string | null
+          lokasi: string
+          nilai: Database["public"]["Enums"]["predikat_pembiasaan"] | null
+          nomor: number
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          id_santri: string
+          id_tahun_ajaran?: string | null
+          lokasi: string
+          nilai?: Database["public"]["Enums"]["predikat_pembiasaan"] | null
+          nomor: number
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          id_santri?: string
+          id_tahun_ajaran?: string | null
+          lokasi?: string
+          nilai?: Database["public"]["Enums"]["predikat_pembiasaan"] | null
+          nomor?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pembiasaan_id_santri_fkey"
+            columns: ["id_santri"]
+            isOneToOne: false
+            referencedRelation: "santri"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pembiasaan_id_tahun_ajaran_fkey"
+            columns: ["id_tahun_ajaran"]
+            isOneToOne: false
+            referencedRelation: "tahun_ajaran"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       pengumuman: {
         Row: {
@@ -209,6 +683,54 @@ export type Database = {
           },
         ]
       }
+      profil_p5: {
+        Row: {
+          created_at: string | null
+          deskripsi_elemen: string | null
+          dimensi: string
+          elemen: string
+          id: string
+          id_santri: string
+          id_tahun_ajaran: string | null
+          nilai: Database["public"]["Enums"]["predikat_p5"] | null
+        }
+        Insert: {
+          created_at?: string | null
+          deskripsi_elemen?: string | null
+          dimensi: string
+          elemen: string
+          id?: string
+          id_santri: string
+          id_tahun_ajaran?: string | null
+          nilai?: Database["public"]["Enums"]["predikat_p5"] | null
+        }
+        Update: {
+          created_at?: string | null
+          deskripsi_elemen?: string | null
+          dimensi?: string
+          elemen?: string
+          id?: string
+          id_santri?: string
+          id_tahun_ajaran?: string | null
+          nilai?: Database["public"]["Enums"]["predikat_p5"] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profil_p5_id_santri_fkey"
+            columns: ["id_santri"]
+            isOneToOne: false
+            referencedRelation: "santri"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "profil_p5_id_tahun_ajaran_fkey"
+            columns: ["id_tahun_ajaran"]
+            isOneToOne: false
+            referencedRelation: "tahun_ajaran"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           aktif: boolean | null
@@ -251,6 +773,7 @@ export type Database = {
           id_wali: string | null
           nama_santri: string
           nis: string
+          nisn: string | null
           status: string | null
           tanggal_masuk: string | null
           updated_at: string | null
@@ -263,6 +786,7 @@ export type Database = {
           id_wali?: string | null
           nama_santri: string
           nis: string
+          nisn?: string | null
           status?: string | null
           tanggal_masuk?: string | null
           updated_at?: string | null
@@ -275,6 +799,7 @@ export type Database = {
           id_wali?: string | null
           nama_santri?: string
           nis?: string
+          nisn?: string | null
           status?: string | null
           tanggal_masuk?: string | null
           updated_at?: string | null
@@ -346,6 +871,39 @@ export type Database = {
           },
         ]
       }
+      tahun_ajaran: {
+        Row: {
+          aktif: boolean | null
+          created_at: string | null
+          id: string
+          nama: string
+          semester: Database["public"]["Enums"]["semester_type"]
+          tanggal_mulai: string | null
+          tanggal_selesai: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          aktif?: boolean | null
+          created_at?: string | null
+          id?: string
+          nama: string
+          semester?: Database["public"]["Enums"]["semester_type"]
+          tanggal_mulai?: string | null
+          tanggal_selesai?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          aktif?: boolean | null
+          created_at?: string | null
+          id?: string
+          nama?: string
+          semester?: Database["public"]["Enums"]["semester_type"]
+          tanggal_mulai?: string | null
+          tanggal_selesai?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string | null
@@ -386,6 +944,24 @@ export type Database = {
     }
     Enums: {
       app_role: "Admin" | "Koordinator" | "Asatidz" | "WaliSantri" | "Yayasan"
+      jenis_penilaian:
+        | "Tugas Harian"
+        | "Ujian Lisan"
+        | "Ujian Tulis"
+        | "Praktikum"
+        | "Proyek"
+        | "PAS"
+        | "PTS"
+      jenjang_sekolah: "TK" | "SD" | "SMP"
+      kategori_mapel:
+        | "Umum"
+        | "Agama"
+        | "Muatan Lokal"
+        | "Pemberdayaan"
+        | "Keterampilan"
+      predikat_p5: "MB" | "SB" | "BSH" | "SAB"
+      predikat_pembiasaan: "A" | "B" | "C" | "D"
+      semester_type: "Ganjil" | "Genap"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -514,6 +1090,26 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["Admin", "Koordinator", "Asatidz", "WaliSantri", "Yayasan"],
+      jenis_penilaian: [
+        "Tugas Harian",
+        "Ujian Lisan",
+        "Ujian Tulis",
+        "Praktikum",
+        "Proyek",
+        "PAS",
+        "PTS",
+      ],
+      jenjang_sekolah: ["TK", "SD", "SMP"],
+      kategori_mapel: [
+        "Umum",
+        "Agama",
+        "Muatan Lokal",
+        "Pemberdayaan",
+        "Keterampilan",
+      ],
+      predikat_p5: ["MB", "SB", "BSH", "SAB"],
+      predikat_pembiasaan: ["A", "B", "C", "D"],
+      semester_type: ["Ganjil", "Genap"],
     },
   },
 } as const
