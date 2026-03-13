@@ -77,6 +77,10 @@ const penilaianItems: MenuItem[] = [
 
 const akademikItems: MenuItem[] = [
   { title: "Dashboard", url: "/akademik/dashboard", icon: GraduationCap },
+  { title: "Kurikulum & Mapel", url: "/akademik/kurikulum", icon: BookMarked },
+  { title: "Input Nilai", url: "/akademik/input-nilai", icon: PenTool },
+  { title: "Kehadiran", url: "/akademik/kehadiran", icon: ClipboardCheck },
+  { title: "Rekap & Peringkat", url: "/akademik/rekap", icon: FileText },
   { title: "Impor Data Nilai", url: "/akademik/impor", icon: Import },
   { title: "Rapor Akademik", url: "/akademik/rapor", icon: FileSpreadsheet },
   { title: "Rapor Diniyah", url: "/akademik/rapor-diniyah", icon: BookMarked },
