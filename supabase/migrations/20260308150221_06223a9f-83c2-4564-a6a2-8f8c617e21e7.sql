@@ -1,0 +1,1 @@
+ALTER TABLE public.kelas ADD COLUMN id_wali_kelas uuid REFERENCES public.profiles(id) ON DELETE SET NULL DEFAULT NULL;
