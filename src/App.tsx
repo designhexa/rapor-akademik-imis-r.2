@@ -28,6 +28,10 @@ import TilawahUjian from "./pages/TilawahUjian";
 
 // Akademik pages
 import AkademikDashboard from "./pages/AkademikDashboard";
+import AkademikKurikulum from "./pages/AkademikKurikulum";
+import AkademikInputNilai from "./pages/AkademikInputNilai";
+import AkademikKehadiran from "./pages/AkademikKehadiran";
+import AkademikRekap from "./pages/AkademikRekap";
 import AkademikImpor from "./pages/AkademikImpor";
 import AkademikRapor from "./pages/AkademikRapor";
 import AkademikRaporDiniyah from "./pages/AkademikRaporDiniyah";
