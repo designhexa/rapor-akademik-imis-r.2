@@ -81,6 +81,10 @@ const App = () => (
             
             {/* Akademik Routes */}
             <Route path="/akademik/dashboard" element={<AkademikDashboard />} />
+            <Route path="/akademik/kurikulum" element={<AkademikKurikulum />} />
+            <Route path="/akademik/input-nilai" element={<AkademikInputNilai />} />
+            <Route path="/akademik/kehadiran" element={<AkademikKehadiran />} />
+            <Route path="/akademik/rekap" element={<AkademikRekap />} />
             <Route path="/akademik/impor" element={<AkademikImpor />} />
             <Route path="/akademik/rapor" element={<AkademikRapor />} />
             <Route path="/akademik/rapor-diniyah" element={<AkademikRaporDiniyah />} />
