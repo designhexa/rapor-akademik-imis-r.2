@@ -1,1 +1,4 @@
 project_id = "injysyydnxmexcjwymyx"
+
+[functions.generate-rapor-deskripsi]
+verify_jwt = false

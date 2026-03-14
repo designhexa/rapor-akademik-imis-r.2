@@ -3,6 +3,9 @@ import {
   BookOpen,
   FileText,
   ClipboardCheck,
+  Heart,
+  Star,
+  Trophy,
   Users,
   BookMarked,
   GraduationCap,
@@ -80,10 +83,15 @@ const akademikItems: MenuItem[] = [
   { title: "Kurikulum & Mapel", url: "/akademik/kurikulum", icon: BookMarked },
   { title: "Input Nilai", url: "/akademik/input-nilai", icon: PenTool },
   { title: "Kehadiran", url: "/akademik/kehadiran", icon: ClipboardCheck },
+  { title: "Pembiasaan", url: "/akademik/pembiasaan", icon: Heart },
+  { title: "Keterampilan Ibadah", url: "/akademik/ibadah", icon: Star },
+  { title: "Ekstrakurikuler", url: "/akademik/ekskul", icon: Trophy },
+  { title: "Profil P5", url: "/akademik/p5", icon: Award },
   { title: "Rekap & Peringkat", url: "/akademik/rekap", icon: FileText },
   { title: "Impor Data Nilai", url: "/akademik/impor", icon: Import },
   { title: "Rapor Akademik", url: "/akademik/rapor", icon: FileSpreadsheet },
   { title: "Rapor Diniyah", url: "/akademik/rapor-diniyah", icon: BookMarked },
+  { title: "Generate Rapor (AI)", url: "/akademik/rapor-generate", icon: FileSpreadsheet },
 ];
 
 const masterDataItems: MenuItem[] = [

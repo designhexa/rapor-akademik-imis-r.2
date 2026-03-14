@@ -35,6 +35,11 @@ import AkademikRekap from "./pages/AkademikRekap";
 import AkademikImpor from "./pages/AkademikImpor";
 import AkademikRapor from "./pages/AkademikRapor";
 import AkademikRaporDiniyah from "./pages/AkademikRaporDiniyah";
+import AkademikPembiasaan from "./pages/AkademikPembiasaan";
+import AkademikIbadah from "./pages/AkademikIbadah";
+import AkademikEkskul from "./pages/AkademikEkskul";
+import AkademikP5 from "./pages/AkademikP5";
+import AkademikRaporGenerate from "./pages/AkademikRaporGenerate";
 import TilawahUjianSemester from "./pages/TilawahUjianSemester";
 import DetailSantri from "./pages/DetailSantri";
 // import TambahDrill from "./pages/TambahDrill";
@@ -88,6 +93,11 @@ const App = () => (
             <Route path="/akademik/impor" element={<AkademikImpor />} />
             <Route path="/akademik/rapor" element={<AkademikRapor />} />
             <Route path="/akademik/rapor-diniyah" element={<AkademikRaporDiniyah />} />
+            <Route path="/akademik/pembiasaan" element={<AkademikPembiasaan />} />
+            <Route path="/akademik/ibadah" element={<AkademikIbadah />} />
+            <Route path="/akademik/ekskul" element={<AkademikEkskul />} />
+            <Route path="/akademik/p5" element={<AkademikP5 />} />
+            <Route path="/akademik/rapor-generate" element={<AkademikRaporGenerate />} />
             {/* Profil & Pengaturan */}
             <Route path="/profil" element={<Profil />} />
             <Route path="/pengaturan" element={<Pengaturan />} />
