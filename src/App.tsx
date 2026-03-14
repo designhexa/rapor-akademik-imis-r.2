@@ -93,6 +93,11 @@ const App = () => (
             <Route path="/akademik/impor" element={<AkademikImpor />} />
             <Route path="/akademik/rapor" element={<AkademikRapor />} />
             <Route path="/akademik/rapor-diniyah" element={<AkademikRaporDiniyah />} />
+            <Route path="/akademik/pembiasaan" element={<AkademikPembiasaan />} />
+            <Route path="/akademik/ibadah" element={<AkademikIbadah />} />
+            <Route path="/akademik/ekskul" element={<AkademikEkskul />} />
+            <Route path="/akademik/p5" element={<AkademikP5 />} />
+            <Route path="/akademik/rapor-generate" element={<AkademikRaporGenerate />} />
             {/* Profil & Pengaturan */}
             <Route path="/profil" element={<Profil />} />
             <Route path="/pengaturan" element={<Pengaturan />} />
