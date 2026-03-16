@@ -262,14 +262,14 @@ export function AppSidebar() {
         {/* Akademik */}
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarNestedMenu label="🎓 Akademik" icon={GraduationCap} items={akademikItems} />
+            <SidebarNestedMenu label="Akademik" icon={GraduationCap} items={akademikItems} />
           </SidebarGroupContent>
         </SidebarGroup>
 
         {/* Diniyah */}
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarNestedMenu label="🕌 Diniyah" icon={BookMarked} items={diniyahItems} />
+            <SidebarNestedMenu label="Diniyah" icon={BookMarked} items={diniyahItems} />
           </SidebarGroupContent>
         </SidebarGroup>
 

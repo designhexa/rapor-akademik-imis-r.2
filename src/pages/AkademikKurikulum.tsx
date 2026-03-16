@@ -382,13 +382,14 @@ export default function AkademikKurikulum() {
       </Dialog>
 
       {/* Komponen Nilai Dialog */}
+      {/* Komponen Nilai Dialog */}
       <Dialog open={komponenDialogOpen} onOpenChange={setKomponenDialogOpen}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-2xl max-h-[85vh] flex flex-col">
           <DialogHeader><DialogTitle>Komponen Nilai: {selectedMapelForKomponen?.nama}</DialogTitle></DialogHeader>
-          <div className="space-y-4">
+          <div className="space-y-4 overflow-y-auto flex-1 pr-1">
             {/* Add Form */}
-            <div className="grid grid-cols-4 gap-2 items-end">
-              <div className="col-span-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 items-end">
+              <div>
                 <Label className="text-xs">Nama</Label>
                 <Input value={komponenForm.nama_komponen} onChange={e => setKomponenForm(f => ({ ...f, nama_komponen: e.target.value }))} placeholder="Tugas Harian 1" />
               </div>
@@ -404,39 +405,41 @@ export default function AkademikKurikulum() {
                 <Input value={komponenForm.kelas} onChange={e => setKomponenForm(f => ({ ...f, kelas: e.target.value }))} placeholder="7, 8, 9..." />
               </div>
               <div className="flex gap-1">
-                <Button onClick={handleAddKomponen} size="sm"><Plus className="w-4 h-4 mr-1" /> {editingKomponen ? "Update" : "Tambah"}</Button>
+                <Button onClick={handleAddKomponen} size="sm" className="w-full sm:w-auto"><Plus className="w-4 h-4 mr-1" /> {editingKomponen ? "Update" : "Tambah"}</Button>
                 {editingKomponen && <Button onClick={cancelEditKomponen} size="sm" variant="outline">Batal</Button>}
               </div>
             </div>
 
             {/* List */}
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Nama Komponen</TableHead>
-                  <TableHead>Jenis</TableHead>
-                  <TableHead>Kelas</TableHead>
-                  <TableHead className="w-24"></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {komponenList.length === 0 ? (
-                  <TableRow><TableCell colSpan={4} className="text-center text-muted-foreground py-4">Belum ada komponen</TableCell></TableRow>
-                ) : komponenList.map(k => (
-                  <TableRow key={k.id} className={editingKomponen?.id === k.id ? "bg-primary/5" : ""}>
-                    <TableCell>{k.nama_komponen}</TableCell>
-                    <TableCell><Badge variant="outline">{k.jenis}</Badge></TableCell>
-                    <TableCell>{k.kelas || "Semua"}</TableCell>
-                    <TableCell>
-                      <div className="flex gap-1">
-                        <Button variant="ghost" size="sm" onClick={() => openEditKomponen(k)}><Pencil className="w-4 h-4" /></Button>
-                        <Button variant="ghost" size="sm" onClick={() => handleDeleteKomponen(k.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
-                      </div>
-                    </TableCell>
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Nama Komponen</TableHead>
+                    <TableHead>Jenis</TableHead>
+                    <TableHead>Kelas</TableHead>
+                    <TableHead className="w-24"></TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {komponenList.length === 0 ? (
+                    <TableRow><TableCell colSpan={4} className="text-center text-muted-foreground py-4">Belum ada komponen</TableCell></TableRow>
+                  ) : komponenList.map(k => (
+                    <TableRow key={k.id} className={editingKomponen?.id === k.id ? "bg-primary/5" : ""}>
+                      <TableCell>{k.nama_komponen}</TableCell>
+                      <TableCell><Badge variant="outline">{k.jenis}</Badge></TableCell>
+                      <TableCell>{k.kelas || "Semua"}</TableCell>
+                      <TableCell>
+                        <div className="flex gap-1">
+                          <Button variant="ghost" size="sm" onClick={() => openEditKomponen(k)}><Pencil className="w-4 h-4" /></Button>
+                          <Button variant="ghost" size="sm" onClick={() => handleDeleteKomponen(k.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           </div>
         </DialogContent>
       </Dialog>
