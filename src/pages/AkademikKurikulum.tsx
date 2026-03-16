@@ -65,6 +65,7 @@ export default function AkademikKurikulum() {
   const [komponenDialogOpen, setKomponenDialogOpen] = useState(false);
   const [selectedMapelForKomponen, setSelectedMapelForKomponen] = useState<Mapel | null>(null);
   const [komponenForm, setKomponenForm] = useState({ nama_komponen: "", jenis: "Tugas Harian", bobot: 1, kelas: "" });
+  const [editingKomponen, setEditingKomponen] = useState<EditingKomponen>(null);
 
   // Tahun ajaran dialog
   const [taDialogOpen, setTaDialogOpen] = useState(false);
