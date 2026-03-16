@@ -403,7 +403,10 @@ export default function AkademikKurikulum() {
                 <Label className="text-xs">Kelas (opsional)</Label>
                 <Input value={komponenForm.kelas} onChange={e => setKomponenForm(f => ({ ...f, kelas: e.target.value }))} placeholder="7, 8, 9..." />
               </div>
-              <Button onClick={handleAddKomponen} size="sm"><Plus className="w-4 h-4 mr-1" /> Tambah</Button>
+              <div className="flex gap-1">
+                <Button onClick={handleAddKomponen} size="sm"><Plus className="w-4 h-4 mr-1" /> {editingKomponen ? "Update" : "Tambah"}</Button>
+                {editingKomponen && <Button onClick={cancelEditKomponen} size="sm" variant="outline">Batal</Button>}
+              </div>
             </div>
 
             {/* List */}
