@@ -35,6 +35,8 @@ type KomponenNilai = {
   kelas: string | null;
 };
 
+type EditingKomponen = KomponenNilai | null;
+
 type TahunAjaran = {
   id: string;
   nama: string;
