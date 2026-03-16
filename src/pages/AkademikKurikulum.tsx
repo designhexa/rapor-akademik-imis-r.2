@@ -35,6 +35,8 @@ type KomponenNilai = {
   kelas: string | null;
 };
 
+type EditingKomponen = KomponenNilai | null;
+
 type TahunAjaran = {
   id: string;
   nama: string;
@@ -63,6 +65,7 @@ export default function AkademikKurikulum() {
   const [komponenDialogOpen, setKomponenDialogOpen] = useState(false);
   const [selectedMapelForKomponen, setSelectedMapelForKomponen] = useState<Mapel | null>(null);
   const [komponenForm, setKomponenForm] = useState({ nama_komponen: "", jenis: "Tugas Harian", bobot: 1, kelas: "" });
+  const [editingKomponen, setEditingKomponen] = useState<EditingKomponen>(null);
 
   // Tahun ajaran dialog
   const [taDialogOpen, setTaDialogOpen] = useState(false);
@@ -142,18 +145,41 @@ export default function AkademikKurikulum() {
 
   const handleAddKomponen = async () => {
     if (!selectedMapelForKomponen || !komponenForm.nama_komponen.trim()) return;
-    const { error } = await supabase.from("komponen_nilai").insert({
-      id_mapel: selectedMapelForKomponen.id,
-      nama_komponen: komponenForm.nama_komponen,
-      jenis: komponenForm.jenis as any,
-      bobot: komponenForm.bobot,
-      kelas: komponenForm.kelas || null,
-      urutan: komponenList.length,
-    });
-    if (error) { toast.error("Gagal menambah komponen"); return; }
-    toast.success("Komponen ditambahkan");
+    
+    if (editingKomponen) {
+      const { error } = await supabase.from("komponen_nilai").update({
+        nama_komponen: komponenForm.nama_komponen,
+        jenis: komponenForm.jenis as any,
+        bobot: komponenForm.bobot,
+        kelas: komponenForm.kelas || null,
+      }).eq("id", editingKomponen.id);
+      if (error) { toast.error("Gagal mengupdate komponen"); return; }
+      toast.success("Komponen berhasil diupdate");
+    } else {
+      const { error } = await supabase.from("komponen_nilai").insert({
+        id_mapel: selectedMapelForKomponen.id,
+        nama_komponen: komponenForm.nama_komponen,
+        jenis: komponenForm.jenis as any,
+        bobot: komponenForm.bobot,
+        kelas: komponenForm.kelas || null,
+        urutan: komponenList.length,
+      });
+      if (error) { toast.error("Gagal menambah komponen"); return; }
+      toast.success("Komponen ditambahkan");
+    }
     setKomponenForm({ nama_komponen: "", jenis: "Tugas Harian", bobot: 1, kelas: "" });
+    setEditingKomponen(null);
     fetchKomponen(selectedMapelForKomponen.id);
+  };
+
+  const openEditKomponen = (k: KomponenNilai) => {
+    setEditingKomponen(k);
+    setKomponenForm({ nama_komponen: k.nama_komponen, jenis: k.jenis, bobot: k.bobot || 1, kelas: k.kelas || "" });
+  };
+
+  const cancelEditKomponen = () => {
+    setEditingKomponen(null);
+    setKomponenForm({ nama_komponen: "", jenis: "Tugas Harian", bobot: 1, kelas: "" });
   };
 
   const handleDeleteKomponen = async (id: string) => {
@@ -377,7 +403,10 @@ export default function AkademikKurikulum() {
                 <Label className="text-xs">Kelas (opsional)</Label>
                 <Input value={komponenForm.kelas} onChange={e => setKomponenForm(f => ({ ...f, kelas: e.target.value }))} placeholder="7, 8, 9..." />
               </div>
-              <Button onClick={handleAddKomponen} size="sm"><Plus className="w-4 h-4 mr-1" /> Tambah</Button>
+              <div className="flex gap-1">
+                <Button onClick={handleAddKomponen} size="sm"><Plus className="w-4 h-4 mr-1" /> {editingKomponen ? "Update" : "Tambah"}</Button>
+                {editingKomponen && <Button onClick={cancelEditKomponen} size="sm" variant="outline">Batal</Button>}
+              </div>
             </div>
 
             {/* List */}
@@ -387,18 +416,23 @@ export default function AkademikKurikulum() {
                   <TableHead>Nama Komponen</TableHead>
                   <TableHead>Jenis</TableHead>
                   <TableHead>Kelas</TableHead>
-                  <TableHead className="w-12"></TableHead>
+                  <TableHead className="w-24"></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {komponenList.length === 0 ? (
                   <TableRow><TableCell colSpan={4} className="text-center text-muted-foreground py-4">Belum ada komponen</TableCell></TableRow>
                 ) : komponenList.map(k => (
-                  <TableRow key={k.id}>
+                  <TableRow key={k.id} className={editingKomponen?.id === k.id ? "bg-primary/5" : ""}>
                     <TableCell>{k.nama_komponen}</TableCell>
                     <TableCell><Badge variant="outline">{k.jenis}</Badge></TableCell>
                     <TableCell>{k.kelas || "Semua"}</TableCell>
-                    <TableCell><Button variant="ghost" size="sm" onClick={() => handleDeleteKomponen(k.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button></TableCell>
+                    <TableCell>
+                      <div className="flex gap-1">
+                        <Button variant="ghost" size="sm" onClick={() => openEditKomponen(k)}><Pencil className="w-4 h-4" /></Button>
+                        <Button variant="ghost" size="sm" onClick={() => handleDeleteKomponen(k.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
+                      </div>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
