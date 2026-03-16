@@ -48,6 +48,8 @@ import SertifikatTasmi from "./pages/SertifikatTasmi";
 // Profil & Pengaturan
 import Profil from "./pages/Profil";
 import Pengaturan from "./pages/Pengaturan";
+import DiniyahDashboard from "./pages/DiniyahDashboard";
+import DiniyahInputNilai from "./pages/DiniyahInputNilai";
 
 const queryClient = new QueryClient();
 
