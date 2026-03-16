@@ -103,6 +103,9 @@ const App = () => (
             {/* Profil & Pengaturan */}
             <Route path="/profil" element={<Profil />} />
             <Route path="/pengaturan" element={<Pengaturan />} />
+            {/* Diniyah Routes */}
+            <Route path="/diniyah/dashboard" element={<DiniyahDashboard />} />
+            <Route path="/diniyah/input-nilai" element={<DiniyahInputNilai />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -22,7 +22,7 @@ import {
   Target,
   PenTool,
   Globe,
-  Mosque,
+  
 } from "lucide-react";
 import {
   Sidebar,
