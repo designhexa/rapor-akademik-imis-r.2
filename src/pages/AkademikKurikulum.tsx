@@ -416,18 +416,23 @@ export default function AkademikKurikulum() {
                   <TableHead>Nama Komponen</TableHead>
                   <TableHead>Jenis</TableHead>
                   <TableHead>Kelas</TableHead>
-                  <TableHead className="w-12"></TableHead>
+                  <TableHead className="w-24"></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {komponenList.length === 0 ? (
                   <TableRow><TableCell colSpan={4} className="text-center text-muted-foreground py-4">Belum ada komponen</TableCell></TableRow>
                 ) : komponenList.map(k => (
-                  <TableRow key={k.id}>
+                  <TableRow key={k.id} className={editingKomponen?.id === k.id ? "bg-primary/5" : ""}>
                     <TableCell>{k.nama_komponen}</TableCell>
                     <TableCell><Badge variant="outline">{k.jenis}</Badge></TableCell>
                     <TableCell>{k.kelas || "Semua"}</TableCell>
-                    <TableCell><Button variant="ghost" size="sm" onClick={() => handleDeleteKomponen(k.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button></TableCell>
+                    <TableCell>
+                      <div className="flex gap-1">
+                        <Button variant="ghost" size="sm" onClick={() => openEditKomponen(k)}><Pencil className="w-4 h-4" /></Button>
+                        <Button variant="ghost" size="sm" onClick={() => handleDeleteKomponen(k.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
+                      </div>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
