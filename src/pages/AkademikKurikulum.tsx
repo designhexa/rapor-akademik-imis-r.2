@@ -145,18 +145,41 @@ export default function AkademikKurikulum() {
 
   const handleAddKomponen = async () => {
     if (!selectedMapelForKomponen || !komponenForm.nama_komponen.trim()) return;
-    const { error } = await supabase.from("komponen_nilai").insert({
-      id_mapel: selectedMapelForKomponen.id,
-      nama_komponen: komponenForm.nama_komponen,
-      jenis: komponenForm.jenis as any,
-      bobot: komponenForm.bobot,
-      kelas: komponenForm.kelas || null,
-      urutan: komponenList.length,
-    });
-    if (error) { toast.error("Gagal menambah komponen"); return; }
-    toast.success("Komponen ditambahkan");
+    
+    if (editingKomponen) {
+      const { error } = await supabase.from("komponen_nilai").update({
+        nama_komponen: komponenForm.nama_komponen,
+        jenis: komponenForm.jenis as any,
+        bobot: komponenForm.bobot,
+        kelas: komponenForm.kelas || null,
+      }).eq("id", editingKomponen.id);
+      if (error) { toast.error("Gagal mengupdate komponen"); return; }
+      toast.success("Komponen berhasil diupdate");
+    } else {
+      const { error } = await supabase.from("komponen_nilai").insert({
+        id_mapel: selectedMapelForKomponen.id,
+        nama_komponen: komponenForm.nama_komponen,
+        jenis: komponenForm.jenis as any,
+        bobot: komponenForm.bobot,
+        kelas: komponenForm.kelas || null,
+        urutan: komponenList.length,
+      });
+      if (error) { toast.error("Gagal menambah komponen"); return; }
+      toast.success("Komponen ditambahkan");
+    }
     setKomponenForm({ nama_komponen: "", jenis: "Tugas Harian", bobot: 1, kelas: "" });
+    setEditingKomponen(null);
     fetchKomponen(selectedMapelForKomponen.id);
+  };
+
+  const openEditKomponen = (k: KomponenNilai) => {
+    setEditingKomponen(k);
+    setKomponenForm({ nama_komponen: k.nama_komponen, jenis: k.jenis, bobot: k.bobot || 1, kelas: k.kelas || "" });
+  };
+
+  const cancelEditKomponen = () => {
+    setEditingKomponen(null);
+    setKomponenForm({ nama_komponen: "", jenis: "Tugas Harian", bobot: 1, kelas: "" });
   };
 
   const handleDeleteKomponen = async (id: string) => {
