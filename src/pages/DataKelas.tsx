@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { MOCK_USTADZ } from "@/lib/mock-data";
+import { usePagination } from "@/hooks/use-pagination";
+import { TablePagination } from "@/components/TablePagination";
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
