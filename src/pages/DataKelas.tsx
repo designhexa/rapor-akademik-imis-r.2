@@ -249,9 +249,9 @@ export default function DataKelas() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {kelasList.map((kelas, index) => (
+                {pagination.paginatedItems.map((kelas, index) => (
                   <TableRow key={kelas.id}>
-                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{pagination.startIndex + index + 1}</TableCell>
                     <TableCell className="font-semibold">{kelas.nama_kelas}</TableCell>
                     <TableCell className="text-muted-foreground">
                       {kelas.deskripsi || "-"}
@@ -281,6 +281,13 @@ export default function DataKelas() {
                 ))}
               </TableBody>
             </Table>
+            <TablePagination
+              currentPage={pagination.currentPage}
+              totalPages={pagination.totalPages}
+              totalItems={pagination.totalItems}
+              startIndex={pagination.startIndex}
+              onPageChange={pagination.setCurrentPage}
+            />
           )}
         </div>
       </div>
