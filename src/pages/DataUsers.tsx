@@ -48,6 +48,8 @@ export default function DataUsers() {
     return filterRole === "Semua Role" || user.role === filterRole;
   });
 
+  const pagination = usePagination(filteredUsers);
+
   return (
     <Layout>
       <div className="space-y-6">
