@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { usePagination } from "@/hooks/use-pagination";
+import { TablePagination } from "@/components/TablePagination";
 import { Layout } from "@/components/Layout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
