@@ -342,9 +342,9 @@ export default function AkademikKurikulum() {
                   <TableBody>
                     {tahunAjaranList.length === 0 ? (
                       <TableRow><TableCell colSpan={5} className="text-center py-8 text-muted-foreground">Belum ada tahun ajaran</TableCell></TableRow>
-                    ) : tahunAjaranList.map((ta, i) => (
+                    ) : taPagination.paginatedItems.map((ta, i) => (
                       <TableRow key={ta.id}>
-                        <TableCell>{i + 1}</TableCell>
+                        <TableCell>{taPagination.startIndex + i + 1}</TableCell>
                         <TableCell className="font-medium">{ta.nama}</TableCell>
                         <TableCell>{ta.semester}</TableCell>
                         <TableCell className="text-center">
@@ -360,6 +360,15 @@ export default function AkademikKurikulum() {
                   </TableBody>
                 </Table>
               </CardContent>
+              <div className="px-4 pb-4">
+                <TablePagination
+                  currentPage={taPagination.currentPage}
+                  totalPages={taPagination.totalPages}
+                  totalItems={taPagination.totalItems}
+                  startIndex={taPagination.startIndex}
+                  onPageChange={taPagination.setCurrentPage}
+                />
+              </div>
             </Card>
           </TabsContent>
         </Tabs>
