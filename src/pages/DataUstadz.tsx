@@ -37,6 +37,8 @@ export default function DataUstadz() {
     u.email.toLowerCase().includes(search.toLowerCase())
   );
 
+  const pagination = usePagination(filteredUstadz);
+
   const handleSubmit = () => {
     if (!nama.trim()) {
       toast.error("Nama ustadz harus diisi");
