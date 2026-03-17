@@ -3,6 +3,8 @@ import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { usePagination } from "@/hooks/use-pagination";
+import { TablePagination } from "@/components/TablePagination";
 import {
   Table,
   TableBody,
@@ -41,6 +43,8 @@ export default function DataHalaqoh() {
   const [halaqohList, setHalaqohList] = useState<MockHalaqoh[]>([...MOCK_HALAQOH]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+
+  const pagination = usePagination(halaqohList);
   const [selectedHalaqoh, setSelectedHalaqoh] = useState<MockHalaqoh | null>(null);
 
   // Form state
@@ -143,11 +147,11 @@ export default function DataHalaqoh() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {halaqohList.map((halaqoh, index) => {
+              {pagination.paginatedItems.map((halaqoh, index) => {
                 const santriCount = getSantriByHalaqoh(halaqoh.id).length;
                 return (
                   <TableRow key={halaqoh.id}>
-                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{pagination.startIndex + index + 1}</TableCell>
                     <TableCell className="font-semibold">{halaqoh.nama}</TableCell>
                     <TableCell className="text-primary">{getUstadzNama(halaqoh.idUstadz)}</TableCell>
                     <TableCell>
@@ -184,6 +188,13 @@ export default function DataHalaqoh() {
               })}
             </TableBody>
           </Table>
+          <TablePagination
+            currentPage={pagination.currentPage}
+            totalPages={pagination.totalPages}
+            totalItems={pagination.totalItems}
+            startIndex={pagination.startIndex}
+            onPageChange={pagination.setCurrentPage}
+          />
         </div>
 
         {/* Dialog Tambah/Edit Halaqoh */}

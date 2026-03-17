@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { usePagination } from "@/hooks/use-pagination";
+import { TablePagination } from "@/components/TablePagination";
 import {
   Select,
   SelectContent,
@@ -46,6 +48,8 @@ export default function DataUsers() {
     return filterRole === "Semua Role" || user.role === filterRole;
   });
 
+  const pagination = usePagination(filteredUsers);
+
   return (
     <Layout>
       <div className="space-y-6">
@@ -87,9 +91,9 @@ export default function DataUsers() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredUsers.map((user, index) => (
+              {pagination.paginatedItems.map((user, index) => (
                 <TableRow key={user.id}>
-                  <TableCell>{index + 1}</TableCell>
+                  <TableCell>{pagination.startIndex + index + 1}</TableCell>
                   <TableCell className="font-medium">{user.nama}</TableCell>
                   <TableCell>{user.username}</TableCell>
                   <TableCell>
@@ -118,6 +122,13 @@ export default function DataUsers() {
               ))}
             </TableBody>
           </Table>
+          <TablePagination
+            currentPage={pagination.currentPage}
+            totalPages={pagination.totalPages}
+            totalItems={pagination.totalItems}
+            startIndex={pagination.startIndex}
+            onPageChange={pagination.setCurrentPage}
+          />
         </div>
       </div>
     </Layout>

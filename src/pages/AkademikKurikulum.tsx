@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { usePagination } from "@/hooks/use-pagination";
+import { TablePagination } from "@/components/TablePagination";
 import { Layout } from "@/components/Layout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -215,6 +217,9 @@ export default function AkademikKurikulum() {
     return true;
   });
 
+  const mapelPagination = usePagination(filteredMapel);
+  const taPagination = usePagination(tahunAjaranList);
+
   const getKategoriBadge = (k: string) => {
     const colors: Record<string, string> = {
       "Umum": "bg-blue-500/10 text-blue-700",
@@ -279,9 +284,9 @@ export default function AkademikKurikulum() {
                       <TableRow><TableCell colSpan={6} className="text-center py-8 text-muted-foreground">Memuat data...</TableCell></TableRow>
                     ) : filteredMapel.length === 0 ? (
                       <TableRow><TableCell colSpan={6} className="text-center py-8 text-muted-foreground">Belum ada mata pelajaran untuk jenjang {filterJenjang}</TableCell></TableRow>
-                    ) : filteredMapel.map((m, i) => (
+                    ) : mapelPagination.paginatedItems.map((m, i) => (
                       <TableRow key={m.id}>
-                        <TableCell>{i + 1}</TableCell>
+                        <TableCell>{mapelPagination.startIndex + i + 1}</TableCell>
                         <TableCell className="font-medium">{m.nama}</TableCell>
                         <TableCell className="font-mono text-xs">{m.kode || "-"}</TableCell>
                         <TableCell>{getKategoriBadge(m.kategori)}</TableCell>
@@ -304,6 +309,15 @@ export default function AkademikKurikulum() {
                   </TableBody>
                 </Table>
               </CardContent>
+              <div className="px-4 pb-4">
+                <TablePagination
+                  currentPage={mapelPagination.currentPage}
+                  totalPages={mapelPagination.totalPages}
+                  totalItems={mapelPagination.totalItems}
+                  startIndex={mapelPagination.startIndex}
+                  onPageChange={mapelPagination.setCurrentPage}
+                />
+              </div>
             </Card>
           </TabsContent>
 
@@ -328,9 +342,9 @@ export default function AkademikKurikulum() {
                   <TableBody>
                     {tahunAjaranList.length === 0 ? (
                       <TableRow><TableCell colSpan={5} className="text-center py-8 text-muted-foreground">Belum ada tahun ajaran</TableCell></TableRow>
-                    ) : tahunAjaranList.map((ta, i) => (
+                    ) : taPagination.paginatedItems.map((ta, i) => (
                       <TableRow key={ta.id}>
-                        <TableCell>{i + 1}</TableCell>
+                        <TableCell>{taPagination.startIndex + i + 1}</TableCell>
                         <TableCell className="font-medium">{ta.nama}</TableCell>
                         <TableCell>{ta.semester}</TableCell>
                         <TableCell className="text-center">
@@ -346,6 +360,15 @@ export default function AkademikKurikulum() {
                   </TableBody>
                 </Table>
               </CardContent>
+              <div className="px-4 pb-4">
+                <TablePagination
+                  currentPage={taPagination.currentPage}
+                  totalPages={taPagination.totalPages}
+                  totalItems={taPagination.totalItems}
+                  startIndex={taPagination.startIndex}
+                  onPageChange={taPagination.setCurrentPage}
+                />
+              </div>
             </Card>
           </TabsContent>
         </Tabs>

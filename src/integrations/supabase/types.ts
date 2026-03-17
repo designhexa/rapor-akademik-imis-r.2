@@ -161,6 +161,27 @@ export type Database = {
         }
         Relationships: []
       }
+      jenis_komponen_custom: {
+        Row: {
+          created_at: string | null
+          deskripsi: string | null
+          id: string
+          nama: string
+        }
+        Insert: {
+          created_at?: string | null
+          deskripsi?: string | null
+          id?: string
+          nama: string
+        }
+        Update: {
+          created_at?: string | null
+          deskripsi?: string | null
+          id?: string
+          nama?: string
+        }
+        Relationships: []
+      }
       kehadiran_akademik: {
         Row: {
           alpha: number | null

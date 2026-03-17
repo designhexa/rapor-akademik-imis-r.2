@@ -4,6 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { usePagination } from "@/hooks/use-pagination";
+import { TablePagination } from "@/components/TablePagination";
 import {
   Table,
   TableBody,
@@ -34,6 +36,8 @@ export default function DataUstadz() {
     u.nama.toLowerCase().includes(search.toLowerCase()) ||
     u.email.toLowerCase().includes(search.toLowerCase())
   );
+
+  const pagination = usePagination(filteredUstadz);
 
   const handleSubmit = () => {
     if (!nama.trim()) {
@@ -130,7 +134,7 @@ export default function DataUstadz() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredUstadz.map((ustadz, index) => {
+              {pagination.paginatedItems.map((ustadz, index) => {
                 const halaqohBinaan = getUstadzHalaqoh(ustadz.id);
                 const totalSantri = halaqohBinaan.reduce(
                   (acc, h) => acc + getSantriByHalaqoh(h.id).length,
@@ -138,7 +142,7 @@ export default function DataUstadz() {
                 );
                 return (
                   <TableRow key={ustadz.id}>
-                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{pagination.startIndex + index + 1}</TableCell>
                     <TableCell className="font-medium text-primary">{ustadz.nama}</TableCell>
                     <TableCell className="flex items-center gap-2">
                       <Mail className="w-4 h-4 text-muted-foreground" />
@@ -189,6 +193,13 @@ export default function DataUstadz() {
               })}
             </TableBody>
           </Table>
+          <TablePagination
+            currentPage={pagination.currentPage}
+            totalPages={pagination.totalPages}
+            totalItems={pagination.totalItems}
+            startIndex={pagination.startIndex}
+            onPageChange={pagination.setCurrentPage}
+          />
         </div>
       </div>
     </Layout>
