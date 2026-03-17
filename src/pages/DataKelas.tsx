@@ -238,56 +238,58 @@ export default function DataKelas() {
               Belum ada data kelas. Klik "Tambah Kelas" untuk menambahkan.
             </div>
           ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>No</TableHead>
-                  <TableHead>Nama Kelas</TableHead>
-                  <TableHead>Deskripsi</TableHead>
-                  <TableHead>Wali Kelas</TableHead>
-                  <TableHead>Aksi</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {pagination.paginatedItems.map((kelas, index) => (
-                  <TableRow key={kelas.id}>
-                    <TableCell>{pagination.startIndex + index + 1}</TableCell>
-                    <TableCell className="font-semibold">{kelas.nama_kelas}</TableCell>
-                    <TableCell className="text-muted-foreground">
-                      {kelas.deskripsi || "-"}
-                    </TableCell>
-                    <TableCell>{getWaliName(kelas.id_wali_kelas)}</TableCell>
-                    <TableCell>
-                      <div className="flex gap-2">
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          className="h-8 w-8"
-                          onClick={() => handleEdit(kelas)}
-                        >
-                          <Pencil className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          className="h-8 w-8 text-destructive hover:text-destructive"
-                          onClick={() => handleDelete(kelas.id)}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </TableCell>
+            <>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>No</TableHead>
+                    <TableHead>Nama Kelas</TableHead>
+                    <TableHead>Deskripsi</TableHead>
+                    <TableHead>Wali Kelas</TableHead>
+                    <TableHead>Aksi</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            <TablePagination
-              currentPage={pagination.currentPage}
-              totalPages={pagination.totalPages}
-              totalItems={pagination.totalItems}
-              startIndex={pagination.startIndex}
-              onPageChange={pagination.setCurrentPage}
-            />
+                </TableHeader>
+                <TableBody>
+                  {pagination.paginatedItems.map((kelas, index) => (
+                    <TableRow key={kelas.id}>
+                      <TableCell>{pagination.startIndex + index + 1}</TableCell>
+                      <TableCell className="font-semibold">{kelas.nama_kelas}</TableCell>
+                      <TableCell className="text-muted-foreground">
+                        {kelas.deskripsi || "-"}
+                      </TableCell>
+                      <TableCell>{getWaliName(kelas.id_wali_kelas)}</TableCell>
+                      <TableCell>
+                        <div className="flex gap-2">
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="h-8 w-8"
+                            onClick={() => handleEdit(kelas)}
+                          >
+                            <Pencil className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="h-8 w-8 text-destructive hover:text-destructive"
+                            onClick={() => handleDelete(kelas.id)}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              <TablePagination
+                currentPage={pagination.currentPage}
+                totalPages={pagination.totalPages}
+                totalItems={pagination.totalItems}
+                startIndex={pagination.startIndex}
+                onPageChange={pagination.setCurrentPage}
+              />
+            </>
           )}
         </div>
       </div>
