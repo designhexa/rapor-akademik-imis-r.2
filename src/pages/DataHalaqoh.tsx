@@ -43,6 +43,8 @@ export default function DataHalaqoh() {
   const [halaqohList, setHalaqohList] = useState<MockHalaqoh[]>([...MOCK_HALAQOH]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+
+  const pagination = usePagination(halaqohList);
   const [selectedHalaqoh, setSelectedHalaqoh] = useState<MockHalaqoh | null>(null);
 
   // Form state
