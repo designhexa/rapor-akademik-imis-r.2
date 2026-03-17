@@ -225,7 +225,7 @@ export default function DataSantri() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredSantri.map((santri) => (
+                {pagination.paginatedItems.map((santri) => (
                   <TableRow key={santri.id} className="cursor-pointer hover:bg-muted/50" onClick={() => navigate(`/santri/${santri.id}`)}>
                     <TableCell className="font-medium">{santri.nis}</TableCell>
                     <TableCell className="text-primary font-medium">{santri.nama}</TableCell>
@@ -258,6 +258,13 @@ export default function DataSantri() {
               </TableBody>
             </Table>
           </div>
+          <TablePagination
+            currentPage={pagination.currentPage}
+            totalPages={pagination.totalPages}
+            totalItems={pagination.totalItems}
+            startIndex={pagination.startIndex}
+            onPageChange={pagination.setCurrentPage}
+          />
         </div>
       </div>
 
