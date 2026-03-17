@@ -217,6 +217,9 @@ export default function AkademikKurikulum() {
     return true;
   });
 
+  const mapelPagination = usePagination(filteredMapel);
+  const taPagination = usePagination(tahunAjaranList);
+
   const getKategoriBadge = (k: string) => {
     const colors: Record<string, string> = {
       "Umum": "bg-blue-500/10 text-blue-700",
