@@ -278,6 +278,13 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
 
+        {/* Master Data Akademik */}
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarNestedMenu label="Master Akademik" icon={Settings} items={masterAkademikItems} />
+          </SidebarGroupContent>
+        </SidebarGroup>
+
         {/* Master Data */}
         <SidebarGroup>
           <SidebarGroupContent>
