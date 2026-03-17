@@ -114,6 +114,8 @@ export default function DataSantri() {
     return matchSearch && matchHalaqoh && matchKelas;
   });
 
+  const pagination = usePagination(filteredSantri);
+
   const openAdd = () => {
     setForm(INITIAL_FORM);
     setTilawahJuz("");
