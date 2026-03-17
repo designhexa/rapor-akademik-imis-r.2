@@ -50,6 +50,8 @@ import Profil from "./pages/Profil";
 import Pengaturan from "./pages/Pengaturan";
 import DiniyahDashboard from "./pages/DiniyahDashboard";
 import DiniyahInputNilai from "./pages/DiniyahInputNilai";
+import KomponenPenilaian from "./pages/KomponenPenilaian";
+import JenisKomponen from "./pages/JenisKomponen";
 
 const queryClient = new QueryClient();
 

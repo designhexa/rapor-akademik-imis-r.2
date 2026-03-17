@@ -77,13 +77,11 @@ const penilaianItems: MenuItem[] = [
 
 const akademikItems: MenuItem[] = [
   { title: "Dashboard Akademik", url: "/akademik/dashboard", icon: GraduationCap },
-  { title: "Kurikulum & Mapel", url: "/akademik/kurikulum", icon: BookMarked },
   { title: "Input Nilai", url: "/akademik/input-nilai", icon: PenTool },
   { title: "Kehadiran", url: "/akademik/kehadiran", icon: ClipboardCheck },
   { title: "Ekstrakurikuler", url: "/akademik/ekskul", icon: Trophy },
   { title: "Profil P5", url: "/akademik/p5", icon: Award },
   { title: "Rekap & Peringkat", url: "/akademik/rekap", icon: FileText },
-  { title: "Impor Data Nilai", url: "/akademik/impor", icon: Import },
   { title: "Rapor Akademik", url: "/akademik/rapor", icon: FileSpreadsheet },
   { title: "Generate Rapor (AI)", url: "/akademik/rapor-generate", icon: FileSpreadsheet },
 ];
@@ -94,6 +92,13 @@ const diniyahItems: MenuItem[] = [
   { title: "Pembiasaan", url: "/akademik/pembiasaan", icon: Heart },
   { title: "Keterampilan Ibadah", url: "/akademik/ibadah", icon: Star },
   { title: "Rapor Diniyah", url: "/akademik/rapor-diniyah", icon: FileSpreadsheet },
+];
+
+const masterAkademikItems: MenuItem[] = [
+  { title: "Kurikulum & Mapel", url: "/akademik/kurikulum", icon: BookMarked },
+  { title: "Komponen Penilaian", url: "/akademik/komponen", icon: ClipboardCheck },
+  { title: "Jenis Komponen", url: "/akademik/jenis-komponen", icon: FileText },
+  { title: "Impor Data Nilai", url: "/akademik/impor", icon: Import },
 ];
 
 const masterDataItems: MenuItem[] = [
