@@ -45,6 +45,7 @@ export default function DataKelas() {
   const [kelasList, setKelasList] = useState<Kelas[]>([]);
   const ustadzList = MOCK_USTADZ;
   const [isLoading, setIsLoading] = useState(true);
+  const pagination = usePagination(kelasList);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [selectedKelas, setSelectedKelas] = useState<Kelas | null>(null);
