@@ -17,10 +17,11 @@ type KehadiranEntry = { bulan: number; sakit: number; izin: number; alpha: numbe
 
 export default function AkademikKehadiran() {
   const [santriList, setSantriList] = useState<Santri[]>([]);
-  const [kelasList, setKelasList] = useState<{ id: string; nama_kelas: string }[]>([]);
+  const [kelasList, setKelasList] = useState<{ id: string; nama_kelas: string; jenjang: string | null }[]>([]);
   const [tahunAjaranList, setTahunAjaranList] = useState<any[]>([]);
   const [selectedKelas, setSelectedKelas] = useState("");
   const [selectedTa, setSelectedTa] = useState("");
+  const [filterJenjang, setFilterJenjang] = useState("SMP");
   const [selectedSemester, setSelectedSemester] = useState<"Ganjil" | "Genap">("Ganjil");
   const [kehadiranMap, setKehadiranMap] = useState<Record<string, KehadiranEntry>>({});
   const [saving, setSaving] = useState(false);
@@ -28,12 +29,13 @@ export default function AkademikKehadiran() {
 
   const semesterBulan = selectedSemester === "Ganjil" ? BULAN_NUM.slice(0, 6) : BULAN_NUM.slice(6);
   const semesterBulanNames = selectedSemester === "Ganjil" ? BULAN.slice(0, 6) : BULAN.slice(6);
+  const filteredKelas = kelasList.filter(k => !k.jenjang || k.jenjang === filterJenjang);
 
   useEffect(() => {
     (async () => {
       const [taRes, kelasRes] = await Promise.all([
         supabase.from("tahun_ajaran").select("*").order("created_at", { ascending: false }),
-        supabase.from("kelas").select("id, nama_kelas").order("nama_kelas"),
+        supabase.from("kelas").select("id, nama_kelas, jenjang").order("nama_kelas"),
       ]);
       if (taRes.data) {
         setTahunAjaranList(taRes.data);
@@ -81,7 +83,7 @@ export default function AkademikKehadiran() {
     setSaving(true);
     const upsertData = Object.entries(kehadiranMap).map(([key, entry]) => {
       const [id_santri, bulanStr] = key.split("_");
-      const tahun = Number(bulanStr) >= 7 ? 2025 : 2026; // approximate
+      const tahun = Number(bulanStr) >= 7 ? 2025 : 2026;
       return {
         ...(entry.dbId ? { id: entry.dbId } : {}),
         id_santri,
@@ -120,26 +122,46 @@ export default function AkademikKehadiran() {
 
         <Card>
           <CardContent className="pt-4">
-            <div className="flex gap-3">
-              <Select value={selectedTa} onValueChange={setSelectedTa}>
-                <SelectTrigger className="w-52"><SelectValue placeholder="Tahun Ajaran" /></SelectTrigger>
-                <SelectContent>
-                  {tahunAjaranList.map((ta: any) => <SelectItem key={ta.id} value={ta.id}>{ta.nama} - {ta.semester}</SelectItem>)}
-                </SelectContent>
-              </Select>
-              <Select value={selectedKelas} onValueChange={setSelectedKelas}>
-                <SelectTrigger className="w-52"><SelectValue placeholder="Kelas" /></SelectTrigger>
-                <SelectContent>
-                  {kelasList.map(k => <SelectItem key={k.id} value={k.id}>{k.nama_kelas}</SelectItem>)}
-                </SelectContent>
-              </Select>
-              <Select value={selectedSemester} onValueChange={v => setSelectedSemester(v as any)}>
-                <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Ganjil">Ganjil</SelectItem>
-                  <SelectItem value="Genap">Genap</SelectItem>
-                </SelectContent>
-              </Select>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div>
+                <label className="text-xs font-medium text-muted-foreground mb-1 block">Tahun Ajaran</label>
+                <Select value={selectedTa} onValueChange={setSelectedTa}>
+                  <SelectTrigger><SelectValue placeholder="Pilih TA" /></SelectTrigger>
+                  <SelectContent>
+                    {tahunAjaranList.map((ta: any) => <SelectItem key={ta.id} value={ta.id}>{ta.nama} - {ta.semester} {ta.aktif ? "✓" : ""}</SelectItem>)}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <label className="text-xs font-medium text-muted-foreground mb-1 block">Jenjang</label>
+                <Select value={filterJenjang} onValueChange={v => { setFilterJenjang(v); setSelectedKelas(""); }}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="TK">TK</SelectItem>
+                    <SelectItem value="SD">SD</SelectItem>
+                    <SelectItem value="SMP">SMP</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <label className="text-xs font-medium text-muted-foreground mb-1 block">Kelas</label>
+                <Select value={selectedKelas} onValueChange={setSelectedKelas}>
+                  <SelectTrigger><SelectValue placeholder="Pilih Kelas" /></SelectTrigger>
+                  <SelectContent>
+                    {filteredKelas.map(k => <SelectItem key={k.id} value={k.id}>{k.nama_kelas}</SelectItem>)}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <label className="text-xs font-medium text-muted-foreground mb-1 block">Semester</label>
+                <Select value={selectedSemester} onValueChange={v => setSelectedSemester(v as any)}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Ganjil">Ganjil</SelectItem>
+                    <SelectItem value="Genap">Genap</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -152,7 +174,7 @@ export default function AkademikKehadiran() {
                   <TableRow>
                     <TableHead rowSpan={2} className="w-10 sticky left-0 bg-[#015504] z-10">No</TableHead>
                     <TableHead rowSpan={2} className="min-w-[160px] sticky left-10 bg-[#015504] z-10">Nama Siswa</TableHead>
-                    {semesterBulanNames.map((b, i) => (
+                    {semesterBulanNames.map((b) => (
                       <TableHead key={b} colSpan={3} className="text-center border-l border-white/20">{b}</TableHead>
                     ))}
                     <TableHead colSpan={3} className="text-center border-l border-white/20">REKAP</TableHead>
@@ -195,6 +217,14 @@ export default function AkademikKehadiran() {
                   ))}
                 </TableBody>
               </Table>
+            </CardContent>
+          </Card>
+        )}
+
+        {!selectedKelas && (
+          <Card className="bg-muted/30">
+            <CardContent className="text-center py-12 text-muted-foreground">
+              Pilih tahun ajaran dan kelas untuk memulai input kehadiran
             </CardContent>
           </Card>
         )}
