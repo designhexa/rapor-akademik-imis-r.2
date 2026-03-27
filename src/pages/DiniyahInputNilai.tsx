@@ -24,6 +24,7 @@ export default function DiniyahInputNilai() {
   const [selectedMapel, setSelectedMapel] = useState("");
   const [selectedKelas, setSelectedKelas] = useState("");
   const [selectedTa, setSelectedTa] = useState("");
+  const [filterJenjang, setFilterJenjang] = useState("SMP");
 
   const [nilaiMap, setNilaiMap] = useState<Record<string, { value: number | null; dirty: boolean; dbId?: string }>>({});
   const [loading, setLoading] = useState(false);
@@ -147,7 +148,7 @@ export default function DiniyahInputNilai() {
 
         <Card>
           <CardContent className="pt-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               <div>
                 <label className="text-xs font-medium text-muted-foreground mb-1 block">Tahun Ajaran</label>
                 <Select value={selectedTa} onValueChange={setSelectedTa}>
@@ -160,11 +161,13 @@ export default function DiniyahInputNilai() {
                 </Select>
               </div>
               <div>
-                <label className="text-xs font-medium text-muted-foreground mb-1 block">Mata Pelajaran Diniyah</label>
-                <Select value={selectedMapel} onValueChange={setSelectedMapel}>
-                  <SelectTrigger><SelectValue placeholder="Pilih Mapel" /></SelectTrigger>
+                <label className="text-xs font-medium text-muted-foreground mb-1 block">Jenjang</label>
+                <Select value={filterJenjang} onValueChange={v => { setFilterJenjang(v); setSelectedMapel(""); }}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
-                    {mapelList.map(m => <SelectItem key={m.id} value={m.id}>{m.nama}</SelectItem>)}
+                    <SelectItem value="TK">TK</SelectItem>
+                    <SelectItem value="SD">SD</SelectItem>
+                    <SelectItem value="SMP">SMP</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -174,6 +177,15 @@ export default function DiniyahInputNilai() {
                   <SelectTrigger><SelectValue placeholder="Pilih Kelas" /></SelectTrigger>
                   <SelectContent>
                     {kelasList.map(k => <SelectItem key={k.id} value={k.id}>{k.nama_kelas}</SelectItem>)}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <label className="text-xs font-medium text-muted-foreground mb-1 block">Mata Pelajaran Diniyah</label>
+                <Select value={selectedMapel} onValueChange={setSelectedMapel}>
+                  <SelectTrigger><SelectValue placeholder="Pilih Mapel" /></SelectTrigger>
+                  <SelectContent>
+                    {mapelList.filter(m => m.jenjang === filterJenjang).map(m => <SelectItem key={m.id} value={m.id}>{m.nama}</SelectItem>)}
                   </SelectContent>
                 </Select>
               </div>
