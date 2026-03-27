@@ -81,9 +81,6 @@ const akademikItems: MenuItem[] = [
   { title: "Kehadiran", url: "/akademik/kehadiran", icon: ClipboardCheck },
   { title: "Ekstrakurikuler", url: "/akademik/ekskul", icon: Trophy },
   { title: "Profil P5", url: "/akademik/p5", icon: Award },
-  { title: "Rekap & Peringkat", url: "/akademik/rekap", icon: FileText },
-  { title: "Rapor Akademik", url: "/akademik/rapor", icon: FileSpreadsheet },
-  { title: "Generate Rapor (AI)", url: "/akademik/rapor-generate", icon: FileSpreadsheet },
 ];
 
 const diniyahItems: MenuItem[] = [
@@ -91,7 +88,13 @@ const diniyahItems: MenuItem[] = [
   { title: "Input Nilai Diniyah", url: "/diniyah/input-nilai", icon: PenTool },
   { title: "Pembiasaan", url: "/akademik/pembiasaan", icon: Heart },
   { title: "Keterampilan Ibadah", url: "/akademik/ibadah", icon: Star },
+];
+
+const rekapRaporItems: MenuItem[] = [
+  { title: "Rekap & Peringkat", url: "/akademik/rekap", icon: FileText },
+  { title: "Rapor Akademik", url: "/akademik/rapor", icon: FileSpreadsheet },
   { title: "Rapor Diniyah", url: "/akademik/rapor-diniyah", icon: FileSpreadsheet },
+  { title: "Generate Rapor (AI)", url: "/akademik/rapor-generate", icon: FileSpreadsheet },
 ];
 
 const masterAkademikItems: MenuItem[] = [
@@ -275,6 +278,13 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarNestedMenu label="Diniyah" icon={BookMarked} items={diniyahItems} />
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        {/* Rekap Nilai & Rapor */}
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarNestedMenu label="Rekap Nilai & Rapor" icon={FileSpreadsheet} items={rekapRaporItems} />
           </SidebarGroupContent>
         </SidebarGroup>
 
